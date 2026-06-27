@@ -88,7 +88,21 @@ async def list_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("🧪 Бот работает! Test OK ✅")
+async def check_birthdays(context: ContextTypes.DEFAULT_TYPE):
 
+    today = datetime.date.today()
+
+    cur.execute("SELECT user_id, name, day, month FROM birthdays")
+    rows = cur.fetchall()
+
+    for user_id, name, day, month in rows:
+
+        if day == today.day and month == today.month:
+
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=f"🎉 Сегодня день рождения у {name}!\n🎁 Поздравляем! 🥳"
+            )
 
 # --- MAIN ---
 def main():
