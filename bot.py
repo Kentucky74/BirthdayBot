@@ -234,28 +234,40 @@ async def daily(context):
     conn.close()
 
 
+    today = datetime.date.today()
+
+
     for user in users:
 
         user_id = user[0]
 
         data = get_birthdays(user_id)
 
-        text = "🎂 Напоминание:\n\n"
+        text = "🎂 Дни рождения:\n\n"
 
 
         for name, day, month in data:
 
-            text += (
-                f"{name} — через "
-                f"{days_left(day, month)} дней\n"
-            )
+            # если сегодня день рождения
+            if today.day == day and today.month == month:
+
+                text += (
+                    f"🎉 Сегодня день рождения у {name}!\n"
+                    f"🎁 Поздравляем! Желаем всех благ и крепкого здоровья 🥳\n\n"
+                )
+
+            else:
+
+                text += (
+                    f"{name} — через "
+                    f"{days_left(day, month)} дней\n"
+                )
 
 
         await context.bot.send_message(
             chat_id=user_id,
             text=text
         )
-
 
 
 
