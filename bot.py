@@ -39,7 +39,7 @@ def get_birthdays(user_id):
 
 # --- COMMANDS ---
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
+    await update.message.send_message(
         "🎂 Бот дней рождений\n\n"
         "/add Имя ДД.ММ\n"
         "/list\n"
@@ -56,17 +56,17 @@ async def add(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         add_birthday_db(update.effective_user.id, name, day, month)
 
-        await update.message.reply_text("✅ Добавлено!")
+        await update.message.send_message("✅ Добавлено!")
 
     except:
-        await update.message.reply_text("❌ Используй: /add Имя ДД.ММ")
+        await update.message.send_message("❌ Используй: /add Имя ДД.ММ")
 
 
 async def list_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = get_birthdays(update.effective_user.id)
 
     if not data:
-        await update.message.reply_text("Список пуст")
+        await update.message.send_message("Список пуст")
         return
 
     text = "🎂 Твои дни рождения:\n\n"
@@ -83,11 +83,11 @@ async def list_cmd(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         text += f"{name} — {day:02}.{month:02} (через {delta} дней)\n"
 
-    await update.message.reply_text(text)
+    await update.message.send_message(text)
 
 
 async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🧪 Бот работает! Test OK ✅")
+    await update.message.send_message("🧪 Бот работает! Test OK ✅")
 async def check_birthdays(context: ContextTypes.DEFAULT_TYPE):
 
     today = datetime.date.today()
