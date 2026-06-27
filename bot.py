@@ -116,7 +116,7 @@ def main():
     job_queue = app.job_queue
     job_queue.run_daily(
         check_birthdays,
-        time=datetime.time(1, 0)
+        time=datetime.time(23,34)
     )
 
     print("Бот запущен")
@@ -138,5 +138,5 @@ async def check_birthdays(context: ContextTypes.DEFAULT_TYPE):
 
             await context.bot.send_message(
                 chat_id=user_id,
-                text=f"🎉 Сегодня день рождения у {name}!\n🎁 Поздравляем! 🥳"
+                text=f"🎉 Сегодня день рождения у {name}!\n🎁 Поздравляем с днем рождения! Желаю здоровья и всех благ 🥳"
             )
