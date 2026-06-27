@@ -277,7 +277,7 @@ async def daily(context):
 def main():
 
     init_db()
-
+app.add_handler(CommandHandler("test", test))
 
     app = (
         Application
@@ -308,7 +308,7 @@ def main():
 
     app.job_queue.run_daily(
         daily,
-        datetime.time(9,0)
+        datetime.time(01,00)
     )
 
 
@@ -321,3 +321,25 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+async def test(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    user_id = update.effective_user.id
+    data = get_birthdays(user_id)
+
+    if not data:
+        await update.message.reply_text("Список пуст")
+        return
+
+    today = datetime.date.today()
+
+    text = "🧪 ТЕСТ РЕЖИМ\n\n"
+
+    for name, day, month in data:
+
+        if today.day == day and today.month == month:
+            text += f"🎉 СЕГОДНЯ ДЕНЬ РОЖДЕНИЯ: {name} 🥳\n"
+        else:
+            text += f"{name} — не сегодня ({day:02}.{month:02})\n"
+
+    await update.message.reply_text(text)
