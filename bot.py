@@ -273,35 +273,21 @@ async def daily(context):
 
 # ---------- Запуск ----------
 
-
+async def test(update, context):
 def main():
 
-    init_db()
-app.add_handler(CommandHandler("test", test))
+    app = Application.builder().token(TOKEN).build()
 
-    app = (
-        Application
-        .builder()
-        .token(TOKEN)
-        .build()
-    )
+    # 👇 СЮДА ДОБАВЛЯЕМ КОМАНДЫ
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("add", add))
+    app.add_handler(CommandHandler("list", list_cmd))
+    app.add_handler(CommandHandler("delete", delete))
 
+    # 👉 ВОТ ТВОЯ НОВАЯ КОМАНДА
+    app.add_handler(CommandHandler("test", test))
 
-    app.add_handler(
-        CommandHandler("start", start)
-    )
-
-    app.add_handler(
-        CommandHandler("add", add)
-    )
-
-    app.add_handler(
-        CommandHandler("list", show)
-    )
-
-    app.add_handler(
-        CommandHandler("delete", delete)
-    )
+    app.run_polling()
 
 
     # каждый день в 9:00
