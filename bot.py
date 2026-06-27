@@ -294,7 +294,7 @@ def main():
 
     app.job_queue.run_daily(
         daily,
-        datetime.time(01,00)
+        datetime.time(1,0)
     )
 
 
