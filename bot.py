@@ -46,6 +46,30 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "/test"
     )
 
+async def delete_birthday(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    user_id = update.effective_user.id
+
+    if not context.args:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text="❌ Использование: /delete Имя"
+        )
+
+        return
+
+    name = " ".join(context.args)
+
+    cur.execute(
+        "DELETE FROM birthdays WHERE user_id=? AND name=?",
+        (user_id, name)
+    )
+    conn.commit()
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f"🗑 Удалено: {name}"
+    )
 
 async def add(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
@@ -112,7 +136,7 @@ def main():
     app.add_handler(CommandHandler("add", add))
     app.add_handler(CommandHandler("list", list_cmd))
     app.add_handler(CommandHandler("test", test))
-
+    
     job_queue = app.job_queue
     job_queue.run_daily(
         check_birthdays,
@@ -140,3 +164,26 @@ async def check_birthdays(context: ContextTypes.DEFAULT_TYPE):
                 chat_id=user_id,
                 text=f"🎉 Сегодня день рождения у {name}!\n🎁 Поздравляем с днем рождения! Желаю здоровья и всех благ 🥳"
             )
+async def delete_birthday(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    user_id = update.effective_user.id
+
+    if not context.args:
+        await context.bot.send_message(
+            chat_id=update.effective_chat.id,
+            text="❌ Использование: /delete Имя"
+        )
+        return
+
+    name = " ".join(context.args)
+
+    cur.execute(
+        "DELETE FROM birthdays WHERE user_id=? AND name=?",
+        (user_id, name)
+    )
+    conn.commit()
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=f"🗑️ Удалено: {name}"
+    )
