@@ -9,7 +9,7 @@ from telegram.ext import (
     ContextTypes
 )
 
-TOKEN = "ТВОЙ_ТОКЕН_СЮДА"
+TOKEN = "8780127018:AAFaX48_joQwXUI0I8EwOOfIHkZWElNAOVM"
 
 # --- DB ---
 conn = sqlite3.connect("birthdays.db", check_same_thread=False)
