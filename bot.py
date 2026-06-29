@@ -209,7 +209,7 @@ def main():
 
     app.job_queue.run_daily(
         check_birthdays,
-        datetime.time(3,02)
+        datetime.time(3,2)
     )
 
 
